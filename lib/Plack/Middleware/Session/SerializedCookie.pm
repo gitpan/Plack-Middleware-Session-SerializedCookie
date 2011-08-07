@@ -9,7 +9,7 @@ use Plack::Request;
 use Plack::Response;
 use Carp;
 
-our $VERSION = 1.01;
+our $VERSION = 1.02;
 
 sub prepare_app {
     my $self = shift;
@@ -27,12 +27,13 @@ sub call {
     my($self, $env) = @_;
 
     my $cookie = Plack::Request->new($env)->cookies->{$self->{session_key}}; 
-    $env->{'psgix.session'} = eval { $self->{deserialize}->($cookie) };
+    $env->{'psgix.session'} = eval { $self->{deserialize}->( defined($cookie) ? $cookie : undef ) };
     $self->{deserialize_exception}->($@) if $@ && $self->{deserialize_exception};
 
     my $res = $self->app->($env);
 
     $self->response_cb( $res, sub {
+	my $res = shift;
 	my $response = Plack::Response->new(@$res);
 	$response->cookies->{$self->{session_key}} = $self->{cookie_options};
 	if( !defined($env->{'psgix.session'}) || $env->{'psgix.session.option'} && $env->{'psgix.session.option'}{expire} ) {

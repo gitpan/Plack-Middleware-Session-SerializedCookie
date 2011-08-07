@@ -1,4 +1,7 @@
 Revision history for Plack-Middleware-Session-SerializedCookie
 
+1.02    2011.8.7
+        Fix bug with delay response
+
 1.01    2010.6.17
         First version, released on an unsuspecting world.

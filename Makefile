@@ -20,7 +20,7 @@
 #     NO_META => q[1]
 #     PL_FILES => {  }
 #     PREREQ_PM => { Test::More=>q[0.88], Plack=>q[0], ExtUtils::MakeMaker=>q[6.42] }
-#     VERSION => q[1.01]
+#     VERSION => q[1.02]
 #     dist => {  }
 #     realclean => { FILES=>q[MYMETA.yml] }
 
@@ -42,11 +42,11 @@ FULL_AR = /usr/bin/ar
 LD = cc
 LDDLFLAGS = -shared -O2 -g -L/usr/local/lib -fstack-protector
 LDFLAGS =  -fstack-protector -L/usr/local/lib
-LIBC = /lib/libc-2.11.1.so
+LIBC = 
 LIB_EXT = .a
 OBJ_EXT = .o
 OSNAME = linux
-OSVERS = 2.6.24-27-server
+OSVERS = 2.6.24-29-server
 RANLIB = :
 SITELIBEXP = /usr/local/share/perl/5.10.1
 SITEARCHEXP = /usr/local/lib/perl/5.10.1
@@ -61,11 +61,11 @@ DIRFILESEP = /
 DFSEP = $(DIRFILESEP)
 NAME = Plack::Middleware::Session::SerializedCookie
 NAME_SYM = Plack_Middleware_Session_SerializedCookie
-VERSION = 1.01
+VERSION = 1.02
 VERSION_MACRO = VERSION
-VERSION_SYM = 1_01
+VERSION_SYM = 1_02
 DEFINE_VERSION = -D$(VERSION_MACRO)=\"$(VERSION)\"
-XS_VERSION = 1.01
+XS_VERSION = 1.02
 XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
 INST_ARCHLIB = blib/arch
@@ -259,7 +259,7 @@ RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = tardist
 DISTNAME = Plack-Middleware-Session-SerializedCookie
-DISTVNAME = Plack-Middleware-Session-SerializedCookie-1.01
+DISTVNAME = Plack-Middleware-Session-SerializedCookie-1.02
 
 
 # --- MakeMaker macro section:
@@ -744,7 +744,7 @@ testdb_static :: testdb_dynamic
 # --- MakeMaker ppd section:
 # Creates a PPD (Perl Package Description) for a binary distribution.
 ppd :
-	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="1.01">' > $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '<SOFTPKG NAME="$(DISTNAME)" VERSION="1.02">' > $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <ABSTRACT></ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR>Cindy Wang (CindyLinz)</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
