@@ -9,7 +9,7 @@ use Plack::Request;
 use Plack::Response;
 use Carp;
 
-our $VERSION = 1.02;
+our $VERSION = 1.03;
 
 sub prepare_app {
     my $self = shift;
@@ -20,7 +20,7 @@ sub prepare_app {
 	$self->{$fname} ||= $self->{serializer} && $self->{serializer}->can($fname) && sub { $self->{serializer}->$fname(@_) } || croak __PACKAGE__.": No '$fname' installed!!"
     }
 
-    $self->{cookie_options} = +{ map { $_ => delete $self->{$_} } grep { exists $self->{$_} } qw(path domain expires secure) };
+    $self->{cookie_options} = +{ map { $_ => delete $self->{$_} } grep { exists $self->{$_} } qw(path domain secure) };
 }
 
 sub call {
@@ -35,6 +35,7 @@ sub call {
     $self->response_cb( $res, sub {
 	my $res = shift;
 	my $response = Plack::Response->new(@$res);
+	$self->{cookie_options}->{expires} = time + $self->{expires} if exists $self->{expires};
 	$response->cookies->{$self->{session_key}} = $self->{cookie_options};
 	if( !defined($env->{'psgix.session'}) || $env->{'psgix.session.option'} && $env->{'psgix.session.option'}{expire} ) {
 	    local $self->{cookie_options}{expires} = 1;
@@ -150,10 +151,14 @@ don't care if the user can arbitrarily modify the session data.
 
 This is used as the cookie name
 
-=item path, domain, expires, secure
+=item path, domain, secure
 
 These are used as the cookie params.
 See L<Plack::Response> for these options.
+
+=item expires
+
+This one is used as an advance time from the request time.
 
 =item serialize
 
